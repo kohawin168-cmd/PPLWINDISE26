@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Simple Sensus Ekonomi 2026
+PPL WINDI FEBRIANTY PPL SUKADAMA</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:#f4f6f9;
+}
+
+.card{
+border-radius:15px;
+}
+
+.hidden{
+display:none;
+}
+
+.warning{
+background:#fff3cd;
+border-left:5px solid orange;
+padding:10px;
+margin-top:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container py-4">
+
+<div id="menuUtama">
+
+<div class="card shadow">
+
+<div class="card-body text-center">
+
+<h2 class="mb-4">
+Simple Sensus Ekonomi 2026
+</h2>
+
+<p class="text-muted">
+Pilih jenis pendataan
+</p>
+
+<button
+class="btn btn-primary btn-lg w-100 mb-3"
+onclick="bukaForm('keluarga')">
+
+👨‍👩‍👧 Pendataan Keluarga
+
+</button>
+
+<button
+class="btn btn-success btn-lg w-100"
+onclick="bukaForm('usaha')">
+
+🏪 Bangunan Khusus Usaha
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ========================= -->
+
+<!-- FORM KELUARGA -->
+
+<div id="formKeluarga" class="hidden">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white">
+
+<h4>Pendataan Keluarga</h4>
+
+</div>
+
+<div class="card-body">
+
+<div class="mb-3">
+
+<label>Nomor Urut Bangunan</label>
+
+<input
+id="nub"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Nomor Urut Keluarga</label>
+
+<input
+id="nuk"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Nama Kepala Keluarga</label>
+
+<input
+id="namaKK"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Nomor Kartu Keluarga</label>
+
+<input
+id="noKK"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Pekerjaan Kepala Keluarga</label>
+
+<input
+id="pekerjaanKK"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Pekerjaan Istri / Anggota Keluarga</label>
+
+<input
+id="pekerjaanIstri"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Penghasilan Kepala Keluarga / Bulan</label>
+
+<input
+id="penghasilanKK"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Penghasilan Istri / Anggota / Bulan</label>
+
+<input
+id="penghasilanIstri"
+class="form-control">
+
+</div>
+
+<!-- lanjut Part 2 -->
+
+</div>
+
+</div>
+
+  </div>
+  <!-- ========================= -->
+<!-- KEPEMILIKAN -->
+
+<h5 class="mt-4">Kepemilikan</h5>
+
+<div class="mb-3">
+
+<label>Rumah</label>
+
+<select id="statusRumah"
+class="form-select"
+onchange="cekRumah()">
+
+<option value="">Pilih</option>
+
+<option value="Milik">Milik</option>
+
+<option value="Sewa">Sewa</option>
+
+</select>
+
+</div>
+
+<div id="divSurat" style="display:none">
+
+<div class="mb-3">
+
+<label>Jenis Surat</label>
+
+<select id="jenisSurat"
+class="form-select">
+
+<option>SKGR</option>
+
+<option>SHM</option>
+
+<option>AJB</option>
+
+<option>Lainnya</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div id="divSewa" style="display:none">
+
+<div class="mb-3">
+
+<label>Nilai Sewa / Bulan</label>
+
+<input
+id="nilaiSewa"
+class="form-control">
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-6">
+
+<label>Sepeda Motor</label>
+
+<input
+type="number"
+id="motor"
+value="0"
+class="form-control">
+
+</div>
+
+<div class="col-6">
+
+<label>Mobil</label>
+
+<input
+type="number"
+id="mobil"
+value="0"
+class="form-control">
+
+</div>
+
+</div>
+
+<div class="row mt-3">
+
+<div class="col-6">
+
+<label>Kulkas</label>
+
+<input
+type="number"
+id="kulkas"
+value="0"
+class="form-control">
+
+</div>
+
+<div class="col-6">
+
+<label>AC</label>
+
+<input
+type="number"
+id="ac"
+value="0"
+class="form-control">
+
+</div>
+
+</div>
+
+<hr>
+
+<h5>Pengeluaran</h5>
+
+<div class="mb-3">
+
+<label>Listrik / Bulan</label>
+
+<input
+id="listrik"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Wifi / Internet</label>
+
+<input
+id="wifi"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Pengeluaran Rutin / Tahun</label>
+
+<input
+id="pengeluaran"
+class="form-control">
+
+</div>
+
+<hr>
+
+<h5>Pendidikan</h5>
+
+<label>Kepala Keluarga</label>
+
+<select id="pendKK" class="form-select mb-2">
+
+<option>Tidak Sekolah</option>
+
+<option>SD</option>
+
+<option>SMP</option>
+
+<option>SMA</option>
+
+<option>D1</option>
+
+<option>D2</option>
+
+<option>D3</option>
+
+<option>S1</option>
+
+<option>S2</option>
+
+<option>S3</option>
+
+</select>
+
+<label>Istri</label>
+
+<select id="pendIstri" class="form-select mb-2">
+
+<option>Tidak Sekolah</option>
+
+<option>SD</option>
+
+<option>SMP</option>
+
+<option>SMA</option>
+
+<option>D1</option>
+
+<option>D2</option>
+
+<option>D3</option>
+
+<option>S1</option>
+
+<option>S2</option>
+
+<option>S3</option>
+
+</select>
+
+<label>Anak 1</label>
+<input id="anak1" class="form-control mb-2">
+
+<label>Anak 2</label>
+<input id="anak2" class="form-control mb-2">
+
+<label>Anak 3</label>
+<input id="anak3" class="form-control mb-2">
+
+<label>Anak 4</label>
+<input id="anak4" class="form-control mb-2">
+
+<label>Anak 5</label>
+<input id="anak5" class="form-control mb-3">
+
+<div class="warning">
+
+<b>⚠ WAJIB:</b>
+
+<ul>
+
+<li>Tagging GPS</li>
+
+<li>Foto Rumah Depan</li>
+
+<li>Foto Ruang Tamu</li>
+
+</ul>
+
+</div>
+
+<div class="mt-3">
+
+<button
+class="btn btn-success w-100"
+onclick="kirimKeluarga()">
+
+KIRIM WHATSAPP
+
+</button>
+
+<br><br>
+
+<button
+class="btn btn-secondary w-100"
+onclick="kembali()">
+
+Kembali
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ========================= -->
+
+<!-- FORM BANGUNAN KHUSUS USAHA -->
+
+<div
+id="formUsaha"
+class="hidden">
+
+<div class="card shadow">
+
+<div class="card-header bg-success text-white">
+
+<h4>Bangunan Khusus Usaha</h4>
+
+</div>
+
+<div class="card-body">
+
+<div class="mb-3">
+
+<label>Nomor Urut Bangunan</label>
+
+<input id="u_nub" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Nama Usaha</label>
+
+<input id="u_nama" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Nama Pemilik</label>
+
+<input id="u_pemilik" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Jenis Kelamin</label>
+
+<select id="u_jk" class="form-select">
+
+<option>Laki-laki</option>
+
+<option>Perempuan</option>
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label>Umur</label>
+
+<input id="u_umur" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>NIK</label>
+
+<input id="u_nik" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>No HP</label>
+
+<input id="u_hp" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Jenis Usaha</label>
+
+<input id="u_jenis" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Produk/Jasa</label>
+
+<input id="u_produk" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Tahun Berdiri</label>
+
+<input id="u_tahun" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Jumlah Pekerja</label>
+
+<input id="u_pekerja" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Omzet/Bulan</label>
+
+<input id="u_omzet" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Biaya/Bulan</label>
+
+<input id="u_biaya" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Alamat</label>
+
+<textarea id="u_alamat"
+class="form-control"></textarea>
+
+</div>
+
+<button
+class="btn btn-success w-100"
+onclick="kirimUsaha()">
+
+KIRIM WHATSAPP
+
+</button>
+
+<br><br>
+
+<button
+class="btn btn-secondary w-100"
+onclick="kembali()">
+
+Kembali
+
+</button>
+
+</div>
+
+</div>
+
+  </div>
+  <script>
+
+const nomorWA="6282115436845";
+
+function bukaForm(mode){
+
+document.getElementById("menuUtama").style.display="none";
+
+if(mode=="keluarga"){
+document.getElementById("formKeluarga").style.display="block";
+}
+
+if(mode=="usaha"){
+document.getElementById("formUsaha").style.display="block";
+}
+
+}
+
+function kembali(){
+
+document.getElementById("menuUtama").style.display="block";
+
+document.getElementById("formKeluarga").style.display="none";
+
+document.getElementById("formUsaha").style.display="none";
+
+}
+
+function cekRumah(){
+
+let status=document.getElementById("statusRumah").value;
+
+if(status=="Milik"){
+
+document.getElementById("divSurat").style.display="block";
+
+document.getElementById("divSewa").style.display="none";
+
+}
+
+else if(status=="Sewa"){
+
+document.getElementById("divSurat").style.display="none";
+
+document.getElementById("divSewa").style.display="block";
+
+}
+
+else{
+
+document.getElementById("divSurat").style.display="none";
+
+document.getElementById("divSewa").style.display="none";
+
+}
+
+}
+
+function kirimKeluarga(){
+
+let txt=
+`*PENDATAAN KELUARGA*
+
+Nomor Urut Bangunan :
+${nub.value}
+
+Nomor Urut Keluarga :
+${nuk.value}
+
+Nama Kepala Keluarga :
+${namaKK.value}
+
+Nomor KK :
+${noKK.value}
+
+Pekerjaan Kepala Keluarga :
+${pekerjaanKK.value}
+
+Pekerjaan Istri :
+${pekerjaanIstri.value}
+
+Penghasilan KK :
+${penghasilanKK.value}
+
+Penghasilan Istri :
+${penghasilanIstri.value}
+
+Status Rumah :
+${statusRumah.value}
+
+Jenis Surat :
+${jenisSurat.value}
+
+Nilai Sewa :
+${nilaiSewa.value}
+
+Motor :
+${motor.value}
+
+Mobil :
+${mobil.value}
+
+Kulkas :
+${kulkas.value}
+
+AC :
+${ac.value}
+
+Listrik :
+${listrik.value}
+
+Wifi :
+${wifi.value}
+
+Pengeluaran Tahunan :
+${pengeluaran.value}
+
+Pendidikan KK :
+${pendKK.value}
+
+Pendidikan Istri :
+${pendIstri.value}
+
+Anak1 :
+${anak1.value}
+
+Anak2 :
+${anak2.value}
+
+Anak3 :
+${anak3.value}
+
+Anak4 :
+${anak4.value}
+
+Anak5 :
+${anak5.value}
+
+⚠ WAJIB FOTO DEPAN RUMAH
+⚠ WAJIB FOTO RUANG TAMU
+⚠ WAJIB TAGGING GPS`;
+
+window.open(
+"https://wa.me/"+nomorWA+"?text="+encodeURIComponent(txt)
+);
+
+}
+
+function kirimUsaha(){
+
+let txt=
+`*BANGUNAN KHUSUS USAHA*
+
+Nomor Urut Bangunan :
+${u_nub.value}
+
+Nama Usaha :
+${u_nama.value}
+
+Nama Pemilik :
+${u_pemilik.value}
+
+Jenis Kelamin :
+${u_jk.value}
+
+Umur :
+${u_umur.value}
+
+NIK :
+${u_nik.value}
+
+No HP :
+${u_hp.value}
+
+Jenis Usaha :
+${u_jenis.value}
+
+Produk/Jasa :
+${u_produk.value}
+
+Tahun Berdiri :
+${u_tahun.value}
+
+Jumlah Pekerja :
+${u_pekerja.value}
+
+Omzet :
+${u_omzet.value}
+
+Biaya :
+${u_biaya.value}
+
+Alamat :
+${u_alamat.value}`;
+
+window.open(
+"https://wa.me/"+nomorWA+"?text="+encodeURIComponent(txt)
+);
+
+}
+
+</script>
+
+</body>
+
+</html>
