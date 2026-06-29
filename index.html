@@ -1780,71 +1780,183 @@
                 return false;
             }
 
-            let text = `*SENSUS EKONOMI 2026 - MODE KELUARGA*\n`;
-            text += `================================\n\n`;
-            text += `*DATA DASAR*\n`;
-            text += `No. Urut Bangunan: ${document.getElementById('f_no_bangunan').value}\n`;
-            text += `No. Urut Keluarga: ${document.getElementById('f_no_keluarga').value}\n`;
-            text += `Nama KK: ${document.getElementById('f_nama_kk').value}\n`;
-            text += `No. KK: ${document.getElementById('f_no_kk').value}\n\n`;
+            let text = `*SENSUS EKONOMI 2026 - MODE KELUARGA*
+`;
+            text += `================================
 
-            text += `*PEKERJAAN & PENGHASILAN*\n`;
-            text += `Pekerjaan KK: ${document.getElementById('f_pekerjaan_kk').value}\n`;
-            text += `Pekerjaan Istri/Anggota: ${document.getElementById('f_pekerjaan_istri').value || '-'}\n`;
-            text += `Penghasilan KK/Bulan: ${formatRupiah(document.getElementById('f_penghasilan_kk').value)}\n`;
-            text += `Penghasilan Anggota/Bulan: ${formatRupiah(document.getElementById('f_penghasilan_anggota').value)}\n\n`;
+`;
+            text += `*DATA DASAR*
+`;
+            text += `No. Urut Bangunan: ${document.getElementById('f_no_bangunan').value}
+`;
+            text += `No. Urut Keluarga: ${document.getElementById('f_no_keluarga').value}
+`;
+            text += `Nama KK: ${document.getElementById('f_nama_kk').value}
+`;
+            text += `No. KK: ${document.getElementById('f_no_kk').value}
+`;
+            text += `Sumber Data: ${document.getElementById('f_sumber_data').value || '-'}
 
-            text += `*KEPEMILIKAN ASET*\n`;
+`;
+
+            // === DATA OCR (jika Assignment Baru) ===
+            const sumberData = document.getElementById('f_sumber_data').value;
+            if (sumberData === 'assignment') {
+                text += `*DATA KARTU KELUARGA (OCR)*
+`;
+                text += `No. KK (OCR): ${document.getElementById('f_no_kk_ocr').value || '-'}
+`;
+                text += `Nama KK (OCR): ${document.getElementById('f_nama_kk_ocr').value || '-'}
+`;
+                text += `Alamat: ${document.getElementById('f_alamat_kk_ocr').value || '-'}
+`;
+                text += `RT/RW: ${document.getElementById('f_rt_kk_ocr').value || '-'} / ${document.getElementById('f_rw_kk_ocr').value || '-'}
+`;
+                text += `Kode Pos: ${document.getElementById('f_kodepos_kk_ocr').value || '-'}
+`;
+                text += `Desa/Kel: ${document.getElementById('f_desa_kk_ocr').value || '-'}
+`;
+                text += `Kecamatan: ${document.getElementById('f_kecamatan_kk_ocr').value || '-'}
+`;
+                text += `Kabupaten/Kota: ${document.getElementById('f_kabupaten_kk_ocr').value || '-'}
+`;
+                text += `Provinsi: ${document.getElementById('f_provinsi_kk_ocr').value || '-'}
+`;
+                text += `Tgl Dikeluarkan: ${document.getElementById('f_tgl_kk_ocr').value || '-'}
+
+`;
+
+                // Anggota keluarga dari OCR
+                const anggota = getAnggotaKeluargaData();
+                if (anggota.length > 0) {
+                    text += `*ANGGOTA KELUARGA (OCR)*
+`;
+                    anggota.forEach((a, i) => {
+                        text += `[${i+1}] ${a.nama || '-'} | NIK: ${a.nik || '-'} | ${a.jk || '-'} | ${a.status || '-'} | ${a.tempat || ''}${a.tgl ? ', ' + a.tgl : ''}
+`;
+                    });
+                    text += `
+`;
+                }
+            }
+
+            text += `*PEKERJAAN & PENGHASILAN*
+`;
+            text += `Pekerjaan KK: ${document.getElementById('f_pekerjaan_kk').value || '-'}
+`;
+            text += `Pekerjaan Istri/Anggota: ${document.getElementById('f_pekerjaan_istri').value || '-'}
+`;
+            text += `Penghasilan KK/Bulan: ${formatRupiah(document.getElementById('f_penghasilan_kk').value)}
+`;
+            text += `Penghasilan Anggota/Bulan: ${formatRupiah(document.getElementById('f_penghasilan_anggota').value)}
+
+`;
+
+            text += `*KEPEMILIKAN ASET*
+`;
             const rumah = document.getElementById('f_rumah').value;
-            text += `Rumah: ${rumah}\n`;
+            text += `Rumah: ${rumah || '-'}
+`;
             if (rumah === 'Milik') {
-                text += `  Jenis Surat: ${document.getElementById('f_jenis_surat').value}\n`;
+                text += `  Jenis Surat: ${document.getElementById('f_jenis_surat').value || '-'}
+`;
             } else if (rumah === 'Sewa') {
-                text += `  Sewa/Bulan: ${formatRupiah(document.getElementById('f_sewa_bulan').value)}\n`;
+                text += `  Sewa/Bulan: ${formatRupiah(document.getElementById('f_sewa_bulan').value)}
+`;
             }
-            text += `Sepeda Motor: ${document.getElementById('f_motor').value || 0} unit\n`;
-            text += `Mobil: ${document.getElementById('f_mobil').value || 0} unit\n`;
-            text += `Kulkas: ${document.getElementById('f_kulkas').value || 0} unit\n`;
-            text += `AC: ${document.getElementById('f_ac').value || 0} unit\n\n`;
+            text += `Luas Tanah: ${document.getElementById('f_tanah_luas').value || 0} m² (P:${document.getElementById('f_tanah_panjang').value || 0}m x L:${document.getElementById('f_tanah_lebar').value || 0}m)
+`;
+            text += `Luas Bangunan: ${document.getElementById('f_bangunan_luas').value || 0} m² (P:${document.getElementById('f_bangunan_panjang').value || 0}m x L:${document.getElementById('f_bangunan_lebar').value || 0}m)
+`;
+            text += `Sepeda Motor: ${document.getElementById('f_motor').value || 0} unit | Nilai: ${document.getElementById('f_motor_harga').value || '-'}
+`;
+            text += `Mobil: ${document.getElementById('f_mobil').value || 0} unit | Perkiraan Harga: ${formatRupiah(document.getElementById('f_mobil_harga').value)}
+`;
+            text += `Kulkas: ${document.getElementById('f_kulkas').value || 0} unit
+`;
+            text += `AC: ${document.getElementById('f_ac').value || 0} unit
 
-            text += `*PENGELUARAN*\n`;
-            text += `Listrik/Bulan: ${formatRupiah(document.getElementById('f_listrik').value)}\n`;
-            text += `WiFi/Internet/Bulan: ${formatRupiah(document.getElementById('f_internet').value)}\n`;
-            text += `Pengeluaran Rutin/Tahun: ${formatRupiah(document.getElementById('f_pengeluaran_tahun').value)}\n\n`;
+`;
 
-            text += `*PENDIDIKAN*\n`;
-            text += `KK: ${document.getElementById('f_pendidikan_kk').value}\n`;
-            text += `Istri: ${document.getElementById('f_pendidikan_istri').value || '-'}\n`;
-            text += `Anak 1: ${document.getElementById('f_pendidikan_anak1').value || '-'}\n`;
-            text += `Anak 2: ${document.getElementById('f_pendidikan_anak2').value || '-'}\n`;
-            text += `Anak 3: ${document.getElementById('f_pendidikan_anak3').value || '-'}\n`;
-            text += `Anak 4: ${document.getElementById('f_pendidikan_anak4').value || '-'}\n`;
-            text += `Anak 5: ${document.getElementById('f_pendidikan_anak5').value || '-'}\n\n`;
+            text += `*PENGELUARAN*
+`;
+            text += `Listrik/Bulan: ${formatRupiah(document.getElementById('f_listrik').value)}
+`;
+            text += `WiFi/Internet/Bulan: ${formatRupiah(document.getElementById('f_internet').value)}
+`;
+            text += `Pengeluaran Rutin/Tahun: ${formatRupiah(document.getElementById('f_pengeluaran_tahun').value)}
 
-            text += `*USAHA KELUARGA*\n`;
-            text += `Memiliki Usaha: ${punyaUsaha.toUpperCase()}\n`;
+`;
+
+            text += `*PENDIDIKAN*
+`;
+            text += `KK: ${document.getElementById('f_pendidikan_kk').value || '-'}
+`;
+            text += `Istri: ${document.getElementById('f_pendidikan_istri').value || '-'}
+`;
+            text += `Anak 1: ${document.getElementById('f_pendidikan_anak1').value || '-'}
+`;
+            text += `Anak 2: ${document.getElementById('f_pendidikan_anak2').value || '-'}
+`;
+            text += `Anak 3: ${document.getElementById('f_pendidikan_anak3').value || '-'}
+`;
+            text += `Anak 4: ${document.getElementById('f_pendidikan_anak4').value || '-'}
+`;
+            text += `Anak 5: ${document.getElementById('f_pendidikan_anak5').value || '-'}
+
+`;
+
+            text += `*USAHA KELUARGA*
+`;
+            text += `Memiliki Usaha: ${punyaUsaha.toUpperCase()}
+`;
             if (punyaUsaha === 'ya') {
-                text += `Nama Usaha: ${document.getElementById('f_nama_usaha').value || '-'}\n`;
-                text += `Jenis Usaha: ${document.getElementById('f_jenis_usaha').value || '-'}\n`;
-                text += `Tahun Mulai: ${document.getElementById('f_tahun_usaha').value || '-'}\n`;
-                text += `Biaya Produksi/Tahun: ${formatRupiah(document.getElementById('f_biaya_produksi').value)}\n`;
-                text += `Biaya Operasional/Tahun: ${formatRupiah(document.getElementById('f_biaya_operasional').value)}\n`;
-                text += `Nilai Produksi/Tahun: ${formatRupiah(document.getElementById('f_nilai_produksi').value)}\n`;
-                text += `Jumlah Pekerja: ${document.getElementById('f_pekerja_total').value || 0}\n`;
-                text += `Pekerja Wanita: ${document.getElementById('f_pekerja_wanita').value || 0}\n`;
-                text += `Pekerja Pria: ${document.getElementById('f_pekerja_pria').value || 0}\n`;
-                text += `Pekerja Digaji: ${document.getElementById('f_pekerja_gaji').value || 0}\n`;
-                text += `Pemilik: ${document.getElementById('f_pemilik_usaha').value || '-'}\n`;
-                text += `Lokasi Usaha: ${document.getElementById('f_lokasi_usaha').value || '-'}\n`;
+                text += `Nama Usaha: ${document.getElementById('f_nama_usaha').value || '-'}
+`;
+                text += `Jenis Usaha: ${document.getElementById('f_jenis_usaha').value || '-'}
+`;
+                text += `Tahun Mulai: ${document.getElementById('f_tahun_usaha').value || '-'}
+`;
+                text += `Biaya Produksi/Tahun: ${formatRupiah(document.getElementById('f_biaya_produksi').value)}
+`;
+                text += `Biaya Operasional/Tahun: ${formatRupiah(document.getElementById('f_biaya_operasional').value)}
+`;
+                text += `Nilai Produksi/Tahun: ${formatRupiah(document.getElementById('f_nilai_produksi').value)}
+`;
+                text += `Jumlah Pekerja: ${document.getElementById('f_pekerja_total').value || 0}
+`;
+                text += `Pekerja Wanita: ${document.getElementById('f_pekerja_wanita').value || 0}
+`;
+                text += `Pekerja Pria: ${document.getElementById('f_pekerja_pria').value || 0}
+`;
+                text += `Pekerja Digaji: ${document.getElementById('f_pekerja_gaji').value || 0}
+`;
+                text += `Pemilik: ${document.getElementById('f_pemilik_usaha').value || '-'}
+`;
+                text += `Lokasi Usaha: ${document.getElementById('f_lokasi_usaha').value || '-'}
+`;
             }
-            text += `\n`;
+            text += `
+`;
 
-            text += `*LOKASI*\n`;
-            text += `Koordinat: ${lat}, ${long}\n`;
-            text += `Maps: https://maps.google.com/?q=${lat},${long}\n\n`;
-            text += `*Dokumentasi:*\n`;
-            text += `[Foto KK, Rumah Depan, Ruang Tamu dilampirkan]\n\n`;
-            text += `================================\n`;
+            text += `*LOKASI*
+`;
+            text += `Koordinat: ${lat}, ${long}
+`;
+            text += `Maps: https://maps.google.com/?q=${lat},${long}
+
+`;
+            text += `*DOKUMENTASI*
+`;
+            text += `Foto KK: ${document.getElementById('f_foto_kk').files.length > 0 ? '✓ Dilampirkan' : '-'}
+`;
+            text += `Foto Rumah Depan: ${document.getElementById('f_foto_rumah').files.length > 0 ? '✓ Dilampirkan' : '-'}
+`;
+            text += `Foto Ruang Tamu: ${document.getElementById('f_foto_ruang').files.length > 0 ? '✓ Dilampirkan' : '-'}
+
+`;
+            text += `================================
+`;
             text += `_Terima kasih telah berpartisipasi dalam Sensus Ekonomi 2026_`;
 
             const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
@@ -1852,7 +1964,7 @@
             return false;
         }
 
-        function submitBusiness(e) {
+function submitBusiness(e) {
             e.preventDefault();
 
             const lat = document.getElementById('b_lat').value;
